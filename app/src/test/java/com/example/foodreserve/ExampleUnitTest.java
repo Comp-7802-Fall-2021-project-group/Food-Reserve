@@ -1,4 +1,4 @@
-package com.example.photogalleryapp;
+package com.example.foodreserve;
 
 import org.junit.Test;
 

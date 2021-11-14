@@ -1,4 +1,4 @@
-package com.example.photogalleryapp.view;
+package com.example.foodreserve.view;
 
 import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
 
@@ -22,15 +22,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.photogalleryapp.R;
-import com.example.photogalleryapp.model.PhotoExifData;
-import com.example.photogalleryapp.presenter.MainPresenter;
+import com.example.foodreserve.model.PhotoExifData;
+import com.example.foodreserve.presenter.MainPresenter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.CancellationTokenSource;
 
 import java.io.File;
 import java.util.Date;
+
+import foodreserve.R;
 
 public class MainActivity extends AppCompatActivity {
     /**

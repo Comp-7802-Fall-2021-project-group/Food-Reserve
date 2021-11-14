@@ -1,4 +1,4 @@
-package com.example.photogalleryapp.presenter;
+package com.example.foodreserve.presenter;
 
 import static androidx.exifinterface.media.ExifInterface.TAG_IMAGE_DESCRIPTION;
 
@@ -19,23 +19,21 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 
-import com.example.photogalleryapp.model.Photo;
-import com.example.photogalleryapp.model.PhotoExifData;
-import com.example.photogalleryapp.model.Photos;
-import com.example.photogalleryapp.util.Utilities;
-import com.example.photogalleryapp.view.MainActivity;
+import com.example.foodreserve.model.Photo;
+import com.example.foodreserve.model.PhotoExifData;
+import com.example.foodreserve.model.Photos;
+import com.example.foodreserve.util.Utilities;
+import com.example.foodreserve.view.MainActivity;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MainPresenter {
 
@@ -64,7 +62,7 @@ public class MainPresenter {
     private static final int PERMISSION_ALL = 99;
 
     String [] AUTHORITIES = {
-           "com.example.android.fileprovider",
+           "com.example.android.foodreserve.fileprovider",
     };
 
     String[] PERMISSIONS = {
@@ -73,7 +71,7 @@ public class MainPresenter {
             android.Manifest.permission.ACCESS_COARSE_LOCATION,
     };
 
-    String PICTURES_DIRECTORY = "/Android/data/com.example.photogalleryapp/files/Pictures";
+    String PICTURES_DIRECTORY = "/Android/data/com.example.foodreserve/files/Pictures";
 
     public MainPresenter() {
         photos = new Photos();

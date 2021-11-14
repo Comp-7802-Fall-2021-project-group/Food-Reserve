@@ -1,6 +1,4 @@
-package com.example.photogalleryapp.model;
-
-import androidx.exifinterface.media.ExifInterface;
+package com.example.foodreserve.model;
 
 public class Photo {
     PhotoExifData exifData;

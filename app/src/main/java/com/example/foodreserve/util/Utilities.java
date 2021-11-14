@@ -1,4 +1,4 @@
-package com.example.photogalleryapp.util;
+package com.example.foodreserve.util;
 
 public class Utilities {
 

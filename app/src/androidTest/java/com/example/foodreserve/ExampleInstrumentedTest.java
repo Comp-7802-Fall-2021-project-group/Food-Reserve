@@ -1,4 +1,4 @@
-package com.example.photogalleryapp;
+package com.example.foodreserve;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -21,7 +21,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.photogalleryapp.view.MainActivity;
+import com.example.foodreserve.view.MainActivity;
 
 import org.hamcrest.Matchers;
 import org.junit.FixMethodOrder;
@@ -29,6 +29,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+
+import foodreserve.R;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -45,7 +47,7 @@ public class ExampleInstrumentedTest {
     public void test11_useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.photogalleryapp", appContext.getPackageName());
+        assertEquals("com.example.foodreserve", appContext.getPackageName());
     }
 
     // Move to next picture (move right) and go back to previous picture (left)

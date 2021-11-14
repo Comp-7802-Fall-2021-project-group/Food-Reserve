@@ -1,4 +1,4 @@
-package com.example.photogalleryapp.view;
+package com.example.foodreserve.view;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -9,14 +9,13 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.photogalleryapp.R;
-import com.example.photogalleryapp.presenter.SearchPresenter;
+import com.example.foodreserve.presenter.SearchPresenter;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
+
+import foodreserve.R;
 
 public class SearchActivity extends AppCompatActivity {
     // Public vars

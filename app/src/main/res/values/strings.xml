@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PhotoGalleryApp</string>
+    <string name="app_name">FoodReserve</string>
     <string name="caption_message">Enter your caption here</string>
     <string name="button_snap">Snap</string>
     <string name="button_search">Search</string>

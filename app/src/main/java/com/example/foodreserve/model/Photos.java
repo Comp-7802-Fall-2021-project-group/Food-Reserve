@@ -1,4 +1,4 @@
-package com.example.photogalleryapp.model;
+package com.example.foodreserve.model;
 
 import java.util.ArrayList;
 import java.util.List;
