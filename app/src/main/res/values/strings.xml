@@ -2,7 +2,7 @@
     <string name="app_name">FoodReserve</string>
     <string name="caption_message">Enter your caption here</string>
     <string name="button_snap">Snap</string>
-    <string name="button_search">Search</string>
+    <string name="button_search">Detect</string>
     <string name="button_left">Left</string>
     <string name="button_right">Right</string>
     <string name="button_upload">Upload</string>

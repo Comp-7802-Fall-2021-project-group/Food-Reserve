@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.CancellationTokenSource;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 import foodreserve.R;
@@ -239,6 +240,10 @@ public class MainActivity extends AppCompatActivity {
             takePictureIntent = presenter.takePhotoIntent(this, takePictureIntent);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    public void searchFood(View view) throws IOException {
+        presenter.searchFood(this, this);
     }
 
     public void scrollLeft(View v) {
