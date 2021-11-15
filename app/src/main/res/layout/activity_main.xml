@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context="com.example.foodreserve.view.MainActivity">
 
     <ImageView
             android:id="@+id/imageView2"
@@ -56,7 +56,7 @@
         tools:text="@string/button_right" />
 
     <Button
-            android:id="@+id/buttonSearch"
+            android:id="@+id/buttonDetect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnUpdateCaption"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonSearch"
+            app:layout_constraintBottom_toTopOf="@+id/buttonDetect"
             app:layout_constraintStart_toEndOf="@+id/buttonLeft"
             app:layout_constraintEnd_toStartOf="@+id/buttonRight"
             android:onClick="updateCaption" />

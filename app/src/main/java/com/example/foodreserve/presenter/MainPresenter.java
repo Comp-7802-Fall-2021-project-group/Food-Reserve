@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.example.foodreserve.model.PhotoExifData;
 import com.example.foodreserve.model.Photos;
 import com.example.foodreserve.util.Utilities;
 import com.example.foodreserve.view.MainActivity;
+import com.google.android.gms.tasks.Task;
 
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.task.vision.detector.Detection;
@@ -473,35 +475,37 @@ public class MainPresenter {
                 .setScoreThreshold(0.5f)
                 .build();
 
-        ObjectDetector detector = null;
+        // Run the detection on a separate thread from main
+        new Thread(() -> {
+            ObjectDetector detector = null;
 
-        try {
-            detector = ObjectDetector.createFromFileAndOptions(
-                    context,
-                    "ssd_mobilenet_v1_1_metadata_1.tflite",
-                    options
-            );
-        } catch (IOException e) {
-            Log.e("ObjectDetection", "unable to create detector " + e.getMessage());
-        }
-
-        if(detector != null) {
-            // Analyze the image and return the the first result (highest confidence)
-            // Current version requires running in debug mode
-            List<Detection> results = detector.detect(tensorImage);
-
-            if(results.size() > 0) {
-                Detection obj = null;
-                for(int i = 0; i < results.size(); i++ ) {
-                   obj = results.get(i);
-                   Log.d("runObjectDetection", "Detected: " + obj);
-                }
-            } else {
-                Log.e("runObjectDetection:", "Did not detect anything");
+            try {
+                detector = ObjectDetector.createFromFileAndOptions(
+                        context,
+                        "ssd_mobilenet_v1_1_metadata_1.tflite",
+                        options
+                );
+            } catch (IOException e) {
+                Log.e("ObjectDetection", "unable to create detector " + e.getMessage());
             }
 
-            detector.close();
-        }
+            if (detector != null) {
+                // Analyze the image and return the the first result (highest confidence)
+                // Current version requires running in debug mode
+                List<Detection> results = detector.detect(tensorImage);
+                Detection obj = null;
+
+                if (results.size() > 0) {
+                    for (int i = 0; i < results.size(); i++) {
+                        obj = results.get(i);
+                        Log.d("runObjectDetection", "Detected: " + obj);
+                    }
+                } else {
+                    Log.e("runObjectDetection:", "Did not detect anything");
+                }
+            }
+        }).start();
+
     }
 
     /**
