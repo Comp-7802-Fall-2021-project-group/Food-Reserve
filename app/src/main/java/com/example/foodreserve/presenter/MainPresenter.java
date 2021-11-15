@@ -11,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
@@ -27,7 +26,6 @@ import com.example.foodreserve.model.PhotoExifData;
 import com.example.foodreserve.model.Photos;
 import com.example.foodreserve.util.Utilities;
 import com.example.foodreserve.view.MainActivity;
-import com.google.android.gms.tasks.Task;
 
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.task.vision.detector.Detection;
