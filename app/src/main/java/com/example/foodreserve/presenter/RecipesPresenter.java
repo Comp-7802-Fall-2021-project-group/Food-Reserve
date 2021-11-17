@@ -22,7 +22,9 @@ import foodreserve.R;
 
 public class RecipesPresenter {
 
-    final Recipes recipes;
+    final String TAG = "RecipesPresenter";
+
+    Recipes recipes;
     final String CHARSET = StandardCharsets.UTF_8.name();
 
     public RecipesPresenter() {
@@ -32,12 +34,14 @@ public class RecipesPresenter {
     /*
      * PUBLIC BUTTON ACTION METHODS
      */
-    public void getRecipes(String query, Context context) {
+    public Recipes getRecipes(String query, Context context) {
         try {
-            getRecipesList(query, context);
+            getRecipesListFromAPI(query, context);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return recipes;
     }
 
     /*
@@ -45,9 +49,8 @@ public class RecipesPresenter {
      */
 
     // External API call to get a list of recipes, reads through response and populates model
-    private void getRecipesList(String query, Context context) throws IOException {
-
-        new Thread(() -> {
+    private void getRecipesListFromAPI(String query, Context context) throws IOException {
+        Thread t = new Thread(() -> {
 
             HttpsURLConnection connection = null;
             try {
@@ -59,22 +62,28 @@ public class RecipesPresenter {
                 connection.connect();
 
                 Log.d("responsecode", "code: " + connection.getResponseCode());
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputline;
+                if(connection.getResponseCode() == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String inputline;
 
-                while((inputline = in.readLine()) != null ) {
-                    JSONObject jsonObject = new JSONObject(inputline);
-                    recipes.readResults(jsonObject);
+                    while((inputline = in.readLine()) != null ) {
+                        JSONObject jsonObject = new JSONObject(inputline);
+                        recipes.readResults(jsonObject);
+                    }
+
+                    in.close();
                 }
-
-                in.close();
             } catch (Exception e){
                 Log.e("oops", e.getMessage());
                 e.printStackTrace();
             } finally {
                 connection.disconnect();
             }
-        }).start();
+        });
+
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.setName(TAG + " getting recipes");
+        t.start();
     }
 
     // Sets up the URL parameters required to get a response from external API and encodes secrets
