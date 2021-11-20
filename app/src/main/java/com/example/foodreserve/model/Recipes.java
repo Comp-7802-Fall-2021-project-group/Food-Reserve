@@ -1,52 +1,118 @@
 package com.example.foodreserve.model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import android.util.Log;
 
-import javax.net.ssl.HttpsURLConnection;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import foodreserve.R;
+import java.util.ArrayList;
 
 public class Recipes {
 
-    private final String SEARCH_RECIPIES = "https://api.edamam.com/api/recipes/v2";
-    private final String[] SEARCH_FIELDS = new String[] {"label", "image", "url", "ingredientLines", "ingredients"};
-    String CHARSET = StandardCharsets.UTF_8.name();
+    public static final String SEARCH_RECIPIES = "https://api.edamam.com/api/recipes/v2";
+    public static final String[] SEARCH_FIELDS = new String[] {"label", "image", "url", "ingredientLines", "ingredients"};
+    static final String TAG = "RecipesModel";
 
-    public void getRecipesList(String query) throws IOException {
-        String link = createParams(query);
-        URL url = new URL(link);
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("Content-Type", "application/json");
+    /*
+     * PRIVATE MEMBERS
+     */
+    private int from;
+    private int to;
+    private int count;
+    private JSONArray hits;
+    private ArrayList<Recipe> recipes;
 
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputline;
-            StringBuilder content = new StringBuilder();
-            while((inputline = in.readLine()) != null ) {
-                content.append(inputline);
-            }
-            in.close();
-        } finally {
-            connection.disconnect();
-        }
+    /*
+     * CONSTRUCTOR & ACCESS METHODS
+     */
+
+    public Recipes() {
+        this.recipes = new ArrayList<>();
     }
 
-    private String createParams(String query ) throws UnsupportedEncodingException {
-        String result = null;
+    public int getFrom() {
+        return from;
+    }
 
-        result = String.format("%s?type=public&q=%s&app_id=%s&app_key=%s",
-                SEARCH_RECIPIES,
-                URLEncoder.encode(query, CHARSET),
-                URLEncoder.encode(String.valueOf(R.string.app_id), CHARSET),
-                URLEncoder.encode(String.valueOf(R.string.app_key), CHARSET));
+    public void setFrom(int from) {
+        this.from = from;
+    }
 
-        return result;
+    public int getTo() {
+        return to;
+    }
+
+    public void setTo(int to) {
+        this.to = to;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public Recipe getRecipe(int index) {
+        return recipes.get(index);
+    }
+
+    /*
+     * CUSTOM METHODS TO PARSE JSON RESULTS FROM API CALLS
+     */
+
+    // Read the the main JSON results
+    public void readResults(JSONObject jsonObject) {
+        try {
+            this.to = jsonObject.getInt("to");
+            this.from = jsonObject.getInt("from");
+            this.hits = jsonObject.getJSONArray("hits");
+
+        } catch (JSONException e) {
+            Log.e(TAG, "unable to parse jsonobject " + e.getMessage());
+        }
+
+        readHits();
+    }
+
+    // Read through each "hit" (aka result) and creates a Recipe object,
+    // each recipe object is then added to Recipes collection
+    private void readHits() {
+        Thread t = new Thread(() -> {
+            for (int i=0; i < hits.length(); i++)
+            {
+                Recipe recipe;
+
+                try {
+                    JSONObject oneHit = hits.getJSONObject(i);
+                    JSONObject oneRecipe = oneHit.getJSONObject("recipe");
+
+                    // Pulling items from the recipe object
+                    String label = oneRecipe.getString("label");
+                    String imageLink = oneRecipe.getString("image");
+                    String source = oneRecipe.getString("source");
+                    String url = oneRecipe.getString("url");
+                    int yield = oneRecipe.getInt("yield");
+                    JSONArray dietLabels = oneRecipe.getJSONArray("dietLabels");
+                    JSONArray cautions = oneRecipe.getJSONArray("cautions");
+                    JSONArray ingredientLines = oneRecipe.getJSONArray("ingredientLines");
+
+                    recipe = new Recipe(label, imageLink, source, url, yield, dietLabels, cautions, ingredientLines);
+
+                    recipes.add(recipe);
+                    Log.d(TAG, label);
+
+                } catch (JSONException e) {
+                    Log.e(TAG, "unable to parse individual recipe result" + e.getMessage());
+                }
+
+            }
+
+        });
+
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
     }
 }
