@@ -26,6 +26,7 @@ import com.example.foodreserve.model.PhotoExifData;
 import com.example.foodreserve.model.Photos;
 import com.example.foodreserve.util.Utilities;
 import com.example.foodreserve.view.MainActivity;
+import com.example.foodreserve.view.RecipesActivity;
 
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.task.vision.detector.Detection;
@@ -47,6 +48,7 @@ public class MainPresenter {
     private Photos photos;
     int index = 0;
     String currentPhotoPath;
+    String detectedFoodItem;
 
     // Only used for unit tests
     static int photoCount = 0;
@@ -417,6 +419,12 @@ public class MainPresenter {
         runObjectDetection(file, context, mainActivity);
     }
 
+    public Intent searchFoodIntent(Context context) {
+        Intent intent = new Intent(context, RecipesActivity.class);
+        intent.putExtra("message", detectedFoodItem );
+        return intent;
+    }
+
     public void scrollLeft() {
         if(index > 0) {
             this.index--;
@@ -498,6 +506,9 @@ public class MainPresenter {
                         obj = results.get(i);
                         Log.d("runObjectDetection", "Detected: " + obj);
                     }
+
+                    // set first result back (highest confidence)
+                    detectedFoodItem = results.get(0).getCategories().get(0).getLabel();
                 } else {
                     Log.e("runObjectDetection:", "Did not detect anything");
                 }
