@@ -1,18 +1,43 @@
 package com.example.foodreserve.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import org.json.JSONArray;
 
+@Entity(tableName = "recipes")
 public class Recipe {
     /*
      * PRIVATE MEMBERS
      */
+
+    @PrimaryKey(autoGenerate = true)
+    private int rid;
+
+    @ColumnInfo
     private String label;
+
+    @ColumnInfo
     private String imageLink;
+
+    @ColumnInfo
     private String source;
+
+    @ColumnInfo
     private String url;
+
+    @ColumnInfo
     private int yield;
+
+    @Ignore
     private JSONArray dietLabels;
+
+    @Ignore
     private JSONArray cautions;
+
+    @Ignore
     private JSONArray ingredientLines;
 
     /*
