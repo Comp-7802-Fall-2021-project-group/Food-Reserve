@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+
 @Entity(tableName = "recipes")
 public class Recipe {
     /*
@@ -31,21 +33,21 @@ public class Recipe {
     @ColumnInfo
     private int yield;
 
-    @Ignore
-    private JSONArray dietLabels;
+    @ColumnInfo
+    private ArrayList<String> dietLabels;
 
-    @Ignore
-    private JSONArray cautions;
+    @ColumnInfo
+    private ArrayList<String> cautions;
 
-    @Ignore
-    private JSONArray ingredientLines;
+    @ColumnInfo
+    private ArrayList<String> ingredientLines;
 
     /*
      * CUSTOM CONSTRUCTOR
      */
 
     public Recipe(String label, String imageLink, String source, String url, int yield,
-                  JSONArray dietLabels, JSONArray cautions, JSONArray ingredientLines) {
+                  ArrayList<String> dietLabels, ArrayList<String> cautions, ArrayList<String> ingredientLines) {
         this.label = label;
         this.imageLink = imageLink;
         this.source = source;
@@ -99,27 +101,27 @@ public class Recipe {
         this.yield = yield;
     }
 
-    public JSONArray getDietLabels() {
+    public ArrayList<String> getDietLabels() {
         return dietLabels;
     }
 
-    public void setDietLabels(JSONArray dietLabels) {
+    public void setDietLabels(ArrayList<String> dietLabels) {
         this.dietLabels = dietLabels;
     }
 
-    public JSONArray getCautions() {
+    public ArrayList<String> getCautions() {
         return cautions;
     }
 
-    public void setCautions(JSONArray cautions) {
+    public void setCautions(ArrayList<String> cautions) {
         this.cautions = cautions;
     }
 
-    public JSONArray getIngredientLines() {
+    public ArrayList<String> getIngredientLines() {
         return ingredientLines;
     }
 
-    public void setIngredientLines(JSONArray ingredientLines) {
+    public void setIngredientLines(ArrayList<String> ingredientLines) {
         this.ingredientLines = ingredientLines;
     }
 }
