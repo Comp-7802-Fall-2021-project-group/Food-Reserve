@@ -6,7 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Recipes {
 
@@ -95,10 +97,12 @@ public class Recipes {
                     String source = oneRecipe.getString("source");
                     String url = oneRecipe.getString("url");
                     int yield = oneRecipe.getInt("yield");
-                    JSONArray dietLabels = oneRecipe.getJSONArray("dietLabels");
-                    JSONArray cautions = oneRecipe.getJSONArray("cautions");
-                    JSONArray ingredientLines = oneRecipe.getJSONArray("ingredientLines");
-
+                    JSONArray dietLabelsArr = oneRecipe.getJSONArray("dietLabels");
+                    ArrayList<String> dietLabels = this.toList(dietLabelsArr);
+                    JSONArray cautionsArr = oneRecipe.getJSONArray("cautions");
+                    ArrayList<String> cautions = this.toList(cautionsArr);
+                    JSONArray ingredientLinesArr = oneRecipe.getJSONArray("ingredientLines");
+                    ArrayList<String> ingredientLines = this.toList(ingredientLinesArr);
                     recipe = new Recipe(label, imageLink, source, url, yield, dietLabels, cautions, ingredientLines);
 
                     recipes.add(recipe);
@@ -114,5 +118,19 @@ public class Recipes {
 
         t.setPriority(Thread.MAX_PRIORITY);
         t.start();
+    }
+
+    private ArrayList<String> toList(JSONArray ja) throws RuntimeException{
+        ArrayList<String> l = new ArrayList<>();
+
+        try{
+            for(int i = 0; i < ja.length(); ++i) {
+                l.add(ja.getString(i));
+            }
+            return l;
+        } catch (JSONException e){
+            throw new RuntimeException("Error in processing array of strings", e);
+        }
+
     }
 }
