@@ -61,6 +61,10 @@ public class Recipe {
     /*
      * ACCESS METHODS
      */
+    public int getRid() { return rid; }
+
+    public void setRid(int rid) { this.rid = rid; }
+
     public String getLabel() {
         return label;
     }
