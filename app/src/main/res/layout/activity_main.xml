@@ -39,7 +39,7 @@
         android:layout_marginBottom="16dp"
         android:onClick="scrollLeft"
         android:text="@string/button_left"
-        app:layout_constraintBottom_toTopOf="@+id/buttonUpload"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRecipes"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/button_left" />
 
@@ -65,7 +65,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonSnap"
             tools:text="@string/button_search"
-            app:layout_constraintStart_toEndOf="@+id/buttonUpload" />
+            app:layout_constraintStart_toEndOf="@+id/buttonRecipes" />
 
     <EditText
             android:id="@+id/editTextCaption"
@@ -96,12 +96,12 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextCaption" />
 
     <Button
-            android:id="@+id/buttonUpload"
+            android:id="@+id/buttonRecipes"
             android:layout_width="94dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:onClick="uploadPhoto"
-            android:text="@string/button_upload"
+            android:onClick="goToRecipes"
+            android:text="@string/button_recipes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp" />
