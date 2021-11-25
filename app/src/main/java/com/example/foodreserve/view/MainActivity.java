@@ -29,7 +29,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.CancellationTokenSource;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 
 import foodreserve.R;
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 });
         if (curLocation != null) {
             presenter.saveNewPhotoWithExifData(currentPhotoPath, "",
-                                    curLocation.getLatitude(), curLocation.getLongitude());;
+                                    curLocation.getLatitude(), curLocation.getLongitude());
         }
     }
 
@@ -220,15 +219,16 @@ public class MainActivity extends AppCompatActivity {
      * PUBLIC METHOD FOR BUTTON ACTION
      */
 
-    // Navigate the user to the search view
-    public void gotoSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class);
-        searchActivityResultLauncher.launch(intent);
-    }
-
-    // Closes the search view and takes the user back to parent view (MainActivity)
+    // Closes the view and takes the user back to parent view
     public void cancelButton(View view) {
         finish();
+    }
+
+    // Go to the Recipes view
+    // TODO: rewire this ideally this should take the user to a recipe search by keyword but for demo this is what the user will press after object detection
+    public void goToRecipes(View view) {
+        Intent intent = presenter.searchFoodIntent(this);
+        startActivity(intent);
     }
 
     // Take a new picture and launch picture intent
@@ -242,7 +242,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void searchFood(View view) throws IOException {
+    // Detects the food item in the picture that is currently displayed
+    public void searchFood(View view) {
         presenter.searchFood(this, this);
     }
 
@@ -267,10 +268,5 @@ public class MainActivity extends AppCompatActivity {
         EditText etCaption = (EditText) findViewById(R.id.editTextCaption);
         presenter.saveCaptionToExif(this, etCaption.getText().toString());
         updatePhotoFromIndex();
-    }
-
-    // Share photo to social media using Android Sharesheet
-    public void uploadPhoto(View view) {
-        presenter.uploadPhotoIntent(this);
     }
 }
