@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodreserve.model.Recipes;
 import com.example.foodreserve.presenter.RecipesPresenter;
 
 import foodreserve.R;
@@ -16,7 +15,6 @@ import foodreserve.R;
 public class RecipesActivity extends AppCompatActivity {
 
     private RecipesPresenter presenter = null;
-    private Recipes recipes;
     private RecyclerView recyclerView;
     private RecipesAdapter adapter;
 
@@ -30,7 +28,9 @@ public class RecipesActivity extends AppCompatActivity {
         String message = intent.getStringExtra("message");
 
         presenter = new RecipesPresenter();
-        recipes = presenter.getRecipes(message, this);
+        if(message != null) {
+            presenter.getRecipes(message, this);
+        }
 
         // Set up recipes recyclerview * layout orientation
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -39,10 +39,13 @@ public class RecipesActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recipesView);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new RecipesAdapter(recipes);
+        // Hook up the recyclerview adapter with the presenter
+        // Adapter has to request data from the presenter to load into the view
+        adapter = new RecipesAdapter(presenter);
         recyclerView.setAdapter(adapter);
+        presenter.setRecipesAdapter(adapter);
 
-        updateRecipesAdapter(message);
+        updateRecipesAdapter();
     }
 
     /*
@@ -52,8 +55,8 @@ public class RecipesActivity extends AppCompatActivity {
     // External API call on button click
     // For future use if searching by keyword instead of photo
     public void getRecipesAction(String query) {
-        recipes = presenter.getRecipes(query, this);
-        updateRecipesAdapter(query);
+        presenter.getRecipes(query, this);
+        updateRecipesAdapter();
     }
 
     // Closes the view and takes the user back to parent view
@@ -61,8 +64,8 @@ public class RecipesActivity extends AppCompatActivity {
         finish();
     }
 
-    private void updateRecipesAdapter(String query) {
-        recipes = presenter.getRecipes(query, this);
+    private void updateRecipesAdapter() {
+        adapter.updateRecipes();
         recyclerView.setAdapter(adapter);
     }
 }
