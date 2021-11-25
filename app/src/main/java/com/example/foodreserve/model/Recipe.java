@@ -128,4 +128,15 @@ public class Recipe {
     public void setIngredientLines(ArrayList<String> ingredientLines) {
         this.ingredientLines = ingredientLines;
     }
+
+    public String toString() {
+        return "Label of the recipe: " + this.getLabel() + System.lineSeparator()
+                + "Image link: " + this.getImageLink() + System.lineSeparator()
+                + "Source: " + this.getSource() + System.lineSeparator()
+                + "Url: " + this.getUrl() + System.lineSeparator()
+                + "Yield: " + this.getUrl() + System.lineSeparator()
+                + "Length of diet label: " + this.getDietLabels().size() + System.lineSeparator()
+                + "Length of ingredient lines: " + this.getIngredientLines().size() + System.lineSeparator()
+                + "Length of cautions: " + this.getCautions().size();
+    }
 }
