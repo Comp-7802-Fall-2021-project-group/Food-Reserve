@@ -97,7 +97,7 @@ public class ExampleInstrumentedTest {
     @Test
     public void test31_searchByDateCancel() {
         // pick start day
-        onView(withId(R.id.buttonSearch)).perform(click());
+//        onView(withId(R.id.buttonSearch)).perform(click());
         onView(withId(R.id.startDate)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 10, 1));
         onView(withText("OK")).perform(click());
@@ -117,7 +117,7 @@ public class ExampleInstrumentedTest {
     @Test
     public void test32_searchByOutOfRangeDateSubmit() {
         // pick start day
-        onView(withId(R.id.buttonSearch)).perform(click());
+//        onView(withId(R.id.buttonSearch)).perform(click());
         onView(withId(R.id.startDate)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 10, 1));
         onView(withText("OK")).perform(click());
@@ -141,7 +141,7 @@ public class ExampleInstrumentedTest {
     @Test
     public void test33_searchByInRangeDateSubmit() {
         // pick start day
-        onView(withId(R.id.buttonSearch)).perform(click());
+//        onView(withId(R.id.buttonSearch)).perform(click());
         onView(withId(R.id.startDate)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 10, 11));
         onView(withText("OK")).perform(click());
@@ -228,7 +228,7 @@ public class ExampleInstrumentedTest {
     // Find a photo by a specific date range & keyword
     public void searchByKeyword(String keyword) {
         // pick start day
-        onView(withId(R.id.buttonSearch)).perform(click());
+//        onView(withId(R.id.buttonSearch)).perform(click());
 
         //enter keyword
         onView(withId(R.id.editKeywordSearch)).perform(replaceText(""), closeSoftKeyboard());
@@ -244,7 +244,7 @@ public class ExampleInstrumentedTest {
     // Find a photo by a specific date range & keyword
     public void searchByLatLong(String latitude, String longitude) {
         // pick start day
-        onView(withId(R.id.buttonSearch)).perform(click());
+//        onView(withId(R.id.buttonSearch)).perform(click());
 
         //enter keyword
         if (latitude != null) {
