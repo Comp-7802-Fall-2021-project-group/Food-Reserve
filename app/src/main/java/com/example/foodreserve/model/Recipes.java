@@ -19,7 +19,6 @@ public class Recipes {
      */
     private int from;
     private int to;
-    private int count;
     private JSONArray hits;
     private ArrayList<Recipe> recipes;
 
@@ -48,11 +47,7 @@ public class Recipes {
     }
 
     public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
+        return recipes.size();
     }
 
     public Recipe getRecipe(int index) {
@@ -80,39 +75,33 @@ public class Recipes {
     // Read through each "hit" (aka result) and creates a Recipe object,
     // each recipe object is then added to Recipes collection
     private void readHits() {
-        Thread t = new Thread(() -> {
-            for (int i=0; i < hits.length(); i++)
-            {
-                Recipe recipe;
+        for (int i=0; i < hits.length(); i++)
+        {
+            Recipe recipe;
 
-                try {
-                    JSONObject oneHit = hits.getJSONObject(i);
-                    JSONObject oneRecipe = oneHit.getJSONObject("recipe");
+            try {
+                JSONObject oneHit = hits.getJSONObject(i);
+                JSONObject oneRecipe = oneHit.getJSONObject("recipe");
 
-                    // Pulling items from the recipe object
-                    String label = oneRecipe.getString("label");
-                    String imageLink = oneRecipe.getString("image");
-                    String source = oneRecipe.getString("source");
-                    String url = oneRecipe.getString("url");
-                    int yield = oneRecipe.getInt("yield");
-                    JSONArray dietLabels = oneRecipe.getJSONArray("dietLabels");
-                    JSONArray cautions = oneRecipe.getJSONArray("cautions");
-                    JSONArray ingredientLines = oneRecipe.getJSONArray("ingredientLines");
+                // Pulling items from the recipe object
+                String label = oneRecipe.getString("label");
+                String imageLink = oneRecipe.getString("image");
+                String source = oneRecipe.getString("source");
+                String url = oneRecipe.getString("url");
+                int yield = oneRecipe.getInt("yield");
+                JSONArray dietLabels = oneRecipe.getJSONArray("dietLabels");
+                JSONArray cautions = oneRecipe.getJSONArray("cautions");
+                JSONArray ingredientLines = oneRecipe.getJSONArray("ingredientLines");
 
-                    recipe = new Recipe(label, imageLink, source, url, yield, dietLabels, cautions, ingredientLines);
+                recipe = new Recipe(label, imageLink, source, url, yield, dietLabels, cautions, ingredientLines);
 
-                    recipes.add(recipe);
-                    Log.d(TAG, label);
+                recipes.add(recipe);
+                Log.d(TAG, label);
 
-                } catch (JSONException e) {
-                    Log.e(TAG, "unable to parse individual recipe result" + e.getMessage());
-                }
-
+            } catch (JSONException e) {
+                Log.e(TAG, "unable to parse individual recipe result" + e.getMessage());
             }
 
-        });
-
-        t.setPriority(Thread.MAX_PRIORITY);
-        t.start();
+        }
     }
 }
