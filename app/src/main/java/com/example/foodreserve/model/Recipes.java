@@ -61,6 +61,8 @@ public class Recipes {
         return recipes.get(index);
     }
 
+    public ArrayList<Recipe> getRecipes() { return recipes; }
+
     /*
      * CUSTOM METHODS TO PARSE JSON RESULTS FROM API CALLS
      */
