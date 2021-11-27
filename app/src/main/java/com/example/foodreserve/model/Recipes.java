@@ -2,11 +2,16 @@ package com.example.foodreserve.model;
 
 import android.util.Log;
 
+import org.checkerframework.checker.units.qual.A;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Recipes {
 
@@ -54,6 +59,8 @@ public class Recipes {
         return recipes.get(index);
     }
 
+    public ArrayList<Recipe> getRecipes() { return recipes; }
+
     /*
      * CUSTOM METHODS TO PARSE JSON RESULTS FROM API CALLS
      */
@@ -75,6 +82,7 @@ public class Recipes {
     // Read through each "hit" (aka result) and creates a Recipe object,
     // each recipe object is then added to Recipes collection
     private void readHits() {
+
         for (int i=0; i < hits.length(); i++)
         {
             Recipe recipe;
@@ -88,10 +96,17 @@ public class Recipes {
                 String imageLink = oneRecipe.getString("image");
                 String source = oneRecipe.getString("source");
                 String url = oneRecipe.getString("url");
+
                 int yield = oneRecipe.getInt("yield");
-                JSONArray dietLabels = oneRecipe.getJSONArray("dietLabels");
-                JSONArray cautions = oneRecipe.getJSONArray("cautions");
-                JSONArray ingredientLines = oneRecipe.getJSONArray("ingredientLines");
+
+                JSONArray dietLabelsArr = oneRecipe.getJSONArray("dietLabels");
+                ArrayList<String> dietLabels = toList(dietLabelsArr);
+
+                JSONArray cautionsArr = oneRecipe.getJSONArray("cautions");
+                ArrayList<String> cautions = toList(cautionsArr);
+
+                JSONArray ingredientLinesArr = oneRecipe.getJSONArray("ingredientLines");
+                ArrayList<String> ingredientLines = toList(ingredientLinesArr);
 
                 recipe = new Recipe(label, imageLink, source, url, yield, dietLabels, cautions, ingredientLines);
 
@@ -104,4 +119,19 @@ public class Recipes {
 
         }
     }
+
+    private ArrayList<String> toList(JSONArray ja) throws RuntimeException{
+        ArrayList<String> l = new ArrayList<>();
+
+        try{
+            for(int i = 0; i < ja.length(); ++i) {
+                l.add(ja.getString(i));
+            }
+            return l;
+        } catch (JSONException e){
+            throw new RuntimeException("Error in processing array of strings", e);
+        }
+
+    }
+
 }

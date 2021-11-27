@@ -1,26 +1,53 @@
 package com.example.foodreserve.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+
+@Entity(tableName = "recipes")
 public class Recipe {
     /*
      * PRIVATE MEMBERS
      */
+
+    @PrimaryKey(autoGenerate = true)
+    private int rid;
+
+    @ColumnInfo
     private String label;
+
+    @ColumnInfo
     private String imageLink;
+
+    @ColumnInfo
     private String source;
+
+    @ColumnInfo
     private String url;
+
+    @ColumnInfo
     private int yield;
-    private JSONArray dietLabels;
-    private JSONArray cautions;
-    private JSONArray ingredientLines;
+
+    @ColumnInfo
+    private ArrayList<String> dietLabels;
+
+    @ColumnInfo
+    private ArrayList<String> cautions;
+
+    @ColumnInfo
+    private ArrayList<String> ingredientLines;
 
     /*
      * CUSTOM CONSTRUCTOR
      */
 
     public Recipe(String label, String imageLink, String source, String url, int yield,
-                  JSONArray dietLabels, JSONArray cautions, JSONArray ingredientLines) {
+                  ArrayList<String> dietLabels, ArrayList<String> cautions, ArrayList<String> ingredientLines) {
         this.label = label;
         this.imageLink = imageLink;
         this.source = source;
@@ -34,6 +61,10 @@ public class Recipe {
     /*
      * ACCESS METHODS
      */
+    public int getRid() { return rid; }
+
+    public void setRid(int rid) { this.rid = rid; }
+
     public String getLabel() {
         return label;
     }
@@ -74,27 +105,38 @@ public class Recipe {
         this.yield = yield;
     }
 
-    public JSONArray getDietLabels() {
+    public ArrayList<String> getDietLabels() {
         return dietLabels;
     }
 
-    public void setDietLabels(JSONArray dietLabels) {
+    public void setDietLabels(ArrayList<String> dietLabels) {
         this.dietLabels = dietLabels;
     }
 
-    public JSONArray getCautions() {
+    public ArrayList<String> getCautions() {
         return cautions;
     }
 
-    public void setCautions(JSONArray cautions) {
+    public void setCautions(ArrayList<String> cautions) {
         this.cautions = cautions;
     }
 
-    public JSONArray getIngredientLines() {
+    public ArrayList<String> getIngredientLines() {
         return ingredientLines;
     }
 
-    public void setIngredientLines(JSONArray ingredientLines) {
+    public void setIngredientLines(ArrayList<String> ingredientLines) {
         this.ingredientLines = ingredientLines;
+    }
+
+    public String toString() {
+        return "Label of the recipe: " + this.getLabel() + System.lineSeparator()
+                + "Image link: " + this.getImageLink() + System.lineSeparator()
+                + "Source: " + this.getSource() + System.lineSeparator()
+                + "Url: " + this.getUrl() + System.lineSeparator()
+                + "Yield: " + this.getUrl() + System.lineSeparator()
+                + "Length of diet label: " + this.getDietLabels().size() + System.lineSeparator()
+                + "Length of ingredient lines: " + this.getIngredientLines().size() + System.lineSeparator()
+                + "Length of cautions: " + this.getCautions().size();
     }
 }

@@ -188,8 +188,10 @@ public class MainPresenter {
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), PICTURES_DIRECTORY);
         File[] fList = file.listFiles();
         Photos photos = new Photos();
-        if(fList.length > 0) {
-            Arrays.stream(fList).forEach(f -> photos.add(f.getPath()));
+        if (fList != null) {
+            if (fList.length > 0) {
+                Arrays.stream(fList).forEach(f -> photos.add(f.getPath()));
+            }
         }
         setPhotos(photos);
         refreshIndex();
