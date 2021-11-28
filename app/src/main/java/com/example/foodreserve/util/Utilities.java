@@ -1,5 +1,10 @@
 package com.example.foodreserve.util;
 
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+
+import androidx.exifinterface.media.ExifInterface;
+
 public class Utilities {
 
     /**
@@ -30,6 +35,35 @@ public class Utilities {
         distance = Math.pow(distance, 2) + Math.pow(height, 2);
 
         return Math.sqrt(distance);
+    }
+
+    // Rotate bitmap sources based on angle
+    public static Bitmap rotateImage(Bitmap source, int orientation) {
+        Matrix matrix = new Matrix();
+        float angle;
+
+        switch (orientation) {
+
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                angle = 90;
+                break;
+
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                angle = 180;
+                break;
+
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                angle = 270;
+                break;
+
+            case ExifInterface.ORIENTATION_NORMAL:
+            default:
+                angle = 0;
+        }
+
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
     }
 
 }

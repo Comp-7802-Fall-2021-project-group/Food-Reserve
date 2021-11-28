@@ -105,7 +105,7 @@ public class RecipesPresenter {
         protected JSONObject doInBackground(String... strings) {
             JSONObject jsonObject = null;
             HttpsURLConnection connection = null;
-            
+            StringBuffer response = null;
             try {
 
                 String link = createParams(strings[0], context);
@@ -118,12 +118,13 @@ public class RecipesPresenter {
                 if(connection.getResponseCode() == 200) {
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String inputline;
+                    response = new StringBuffer();
 
                     while((inputline = in.readLine()) != null ) {
-                        jsonObject = new JSONObject(inputline);
+                        response.append(inputline);
                     }
-
                     in.close();
+                    jsonObject = new JSONObject(response.toString());
                 }
             } catch (Exception e){
                 Log.e("oops", e.getMessage());
@@ -131,7 +132,7 @@ public class RecipesPresenter {
             } finally {
                 connection.disconnect();
             }
-           
+
             return jsonObject;
         }
 
