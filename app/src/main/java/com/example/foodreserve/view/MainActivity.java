@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +28,9 @@ import com.example.foodreserve.presenter.MainPresenter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.CancellationTokenSource;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.File;
 import java.util.Date;
@@ -77,6 +81,23 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("Location", "location => " + location.toString());
                     }
                 });
+
+        BottomNavigationView bottomNav = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        break;
+                    case R.id.recipe:
+                        Intent intent = presenter.searchFoodIntent(this);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     // Confirm permissions and display an appropriate toad message for each permission
