@@ -300,7 +300,7 @@ public class MainPresenter {
     // Overloading the default find photo methods to reload picture based on search criterias
     public void findPhotos(String startDate, String endDate, String editKeywordSearch, String latitude, String longitude) {
         // create start date and end date if exist
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date start = null, end = null;
         double searchLatitude = 0, searchLongitude = 0;
         List<String> listKeyword = null;
@@ -522,7 +522,9 @@ public class MainPresenter {
                     }
 
                     // set first result back (highest confidence)
-                    mainActivity.setTextEditTextDetectedObject(String.join(" ", foundObject));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        mainActivity.setTextEditTextDetectedObject(String.join(" ", foundObject));
+                    }
                 } else {
                     Log.e("runObjectDetection:", "Did not detect anything");
                 }

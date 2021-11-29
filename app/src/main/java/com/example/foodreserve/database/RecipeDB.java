@@ -1,11 +1,7 @@
 package com.example.foodreserve.database;
 
-import android.content.Context;
-
 import androidx.room.Database;
-import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 import com.example.foodreserve.model.Recipe;
@@ -16,7 +12,6 @@ public abstract class RecipeDB extends RoomDatabase {
 
     public abstract RecipeDao recipeDao();
 
-/** Singleton Pattern */
 //    private static final String DB_NAME = "recipe_db";
 //
 //    private static RecipeDB instance;

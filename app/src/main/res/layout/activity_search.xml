@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.SearchActivity">
+        tools:context="com.example.foodreserve.view.SearchActivity">
 
     <EditText
             android:id="@+id/longitude"
@@ -16,7 +16,8 @@
             android:inputType="date"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelLongitude" />
+            app:layout_constraintTop_toBottomOf="@+id/labelLongitude"
+        android:importantForAutofill="no" />
 
     <EditText
             android:id="@+id/latitude"
@@ -29,7 +30,8 @@
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelLatitude"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
     <TextView
             android:id="@+id/labelLongitude"
@@ -86,7 +88,8 @@
             android:focusableInTouchMode="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelStartDate"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
     <EditText
             android:id="@+id/endDate"
@@ -102,7 +105,8 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelEndDate" />
+            app:layout_constraintTop_toBottomOf="@+id/labelEndDate"
+        android:importantForAutofill="no" />
 
     <TextView
             android:id="@+id/labelSearchKeywords"
@@ -125,7 +129,8 @@
             android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelSearchKeywords" />
+            app:layout_constraintTop_toBottomOf="@+id/labelSearchKeywords"
+        android:importantForAutofill="no" />
 
     <Button
             android:id="@+id/buttonSubmit"

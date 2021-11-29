@@ -1,5 +1,6 @@
 package com.example.foodreserve.presenter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -109,7 +110,7 @@ public class RecipesPresenter {
 
     private class GetRecipesTask extends AsyncTask<String, Void, JSONObject> {
 
-        private Context context;
+        private final Context context;
 
         public GetRecipesTask(Context con) {
             context = con;
