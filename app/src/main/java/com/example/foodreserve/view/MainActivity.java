@@ -82,21 +82,17 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        BottomNavigationView bottomNav = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        break;
-                    case R.id.recipe:
-                        Intent intent = presenter.searchFoodIntent(this);
-                        startActivity(intent);
-                        break;
-                }
-                return false;
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
+        bottomNav.setOnItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.home:
+                    break;
+                case R.id.recipe:
+                    Intent intent = presenter.searchFoodIntent(this);
+                    startActivity(intent);
+                    break;
             }
+            return false;
         });
     }
 
