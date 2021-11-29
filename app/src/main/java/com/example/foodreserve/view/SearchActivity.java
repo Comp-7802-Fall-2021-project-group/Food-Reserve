@@ -1,5 +1,6 @@
 package com.example.foodreserve.view;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,9 +42,6 @@ public class SearchActivity extends AppCompatActivity {
         editKeywordSearch = (EditText) findViewById(R.id.editKeywordSearch);
         editLat = (EditText) findViewById(R.id.latitude);
         editLong = (EditText) findViewById(R.id.longitude);
-
-        // startDate.setText(dateStrings.get(0));
-        // endDate.setText(dateStrings.get(1));
 
         DatePickerDialog.OnDateSetListener startDatePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -90,7 +88,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void updateDateLabel(EditText etDate) {
         String myFormat = "yyyyMMdd"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
         etDate.setText(sdf.format(myCalendar.getTime()));
     }
 

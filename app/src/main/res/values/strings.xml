@@ -16,4 +16,5 @@
 
     <string name="label_latitude">Latitude</string>
     <string name="label_longitude">Longitude</string>
+    <string name="current_photo">Current photo</string>
 </resources>
