@@ -1,10 +1,12 @@
 package com.example.foodreserve.view;
 
+import static com.example.foodreserve.util.Utilities.rotateImage;
 import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
@@ -150,12 +152,14 @@ public class MainActivity extends AppCompatActivity {
         TextView tvFilename = (TextView) findViewById(R.id.textViewFilename);
         TextView tvLat = (TextView) findViewById(R.id.textViewLat);
         TextView tvLong = (TextView) findViewById(R.id.textViewLong);
+        EditText etDetectedObject = (EditText) findViewById(R.id.editTextDetectedObject);
 
         etCaption.setText(caption);
         tvTimestamp.setText(timestamp);
         tvFilename.setText(filename);
         tvLat.setText(String.format("Latitude: %,.4f", latitude));
         tvLong.setText(String.format("Longitude: %,.4f", longitude));
+        etDetectedObject.setText("");
     }
 
     // Load current picture with the caption and geo from the picture's exif metadata
@@ -171,11 +175,15 @@ public class MainActivity extends AppCompatActivity {
             Date fDate = new Date(file.lastModified());
             String path = file.getAbsolutePath();
             PhotoExifData photoExifData = presenter.getPhotoExifData(file.getAbsolutePath());
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            Bitmap rotatedBitmap = rotateImage(bitmap, photoExifData.getOrientation());
 
             // Set photo based on retrieved data
-            image.setImageBitmap(BitmapFactory.decodeFile(path));
+            image.setImageBitmap(rotatedBitmap);
             loadPhotoDataIntoView(photoExifData.getCaption(), fDate.toString(), file.getName(),
                     photoExifData.getLatitude(), photoExifData.getLongitude());
+
+            presenter.searchFood(this, this);
         }
     }
 
@@ -285,5 +293,15 @@ public class MainActivity extends AppCompatActivity {
         EditText etCaption = (EditText) findViewById(R.id.editTextCaption);
         presenter.saveCaptionToExif(this, etCaption.getText().toString());
         updatePhotoFromIndex();
+    }
+
+    public void setTextEditTextDetectedObject(String message) {
+        final String captionText = message;
+
+        runOnUiThread(() -> {
+            EditText etDetectedObject = (EditText) findViewById(R.id.editTextDetectedObject);
+            etDetectedObject.setText(captionText);
+        });
+
     }
 }

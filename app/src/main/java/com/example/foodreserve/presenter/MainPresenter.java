@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -150,6 +151,9 @@ public class MainPresenter {
                 photoExifData.setLatitude(exif.getLatLong()[0]);
                 photoExifData.setLongitude(exif.getLatLong()[1]);
             }
+
+            photoExifData.setOrientation(exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                                     ExifInterface.ORIENTATION_UNDEFINED));
         } catch (NullPointerException | IOException e) {
             Log.d("findPhotos", "Unable to retrieve EXIF data from file");
         }
@@ -501,16 +505,24 @@ public class MainPresenter {
                 // Analyze the image and return the the first result (highest confidence)
                 // Current version requires running in debug mode
                 List<Detection> results = detector.detect(tensorImage);
-                Detection obj = null;
 
                 if (results.size() > 0) {
-                    for (int i = 0; i < results.size(); i++) {
-                        obj = results.get(i);
+                    List<String> foundObject = new ArrayList<String>();
+
+                    for (Detection obj : results) {
                         Log.d("runObjectDetection", "Detected: " + obj);
+
+                        detectedFoodItem = obj.getCategories().get(0).getLabel();
+
+                        if (!foundObject.contains(detectedFoodItem)) {
+                            foundObject.add(detectedFoodItem.toLowerCase(Locale.ROOT));
+                        }
+
+                        if (foundObject.size() == 3) break;
                     }
 
                     // set first result back (highest confidence)
-                    detectedFoodItem = results.get(0).getCategories().get(0).getLabel();
+                    mainActivity.setTextEditTextDetectedObject(String.join(" ", foundObject));
                 } else {
                     Log.e("runObjectDetection:", "Did not detect anything");
                 }

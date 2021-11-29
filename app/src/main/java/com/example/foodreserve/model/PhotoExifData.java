@@ -8,6 +8,7 @@ public class PhotoExifData {
     double latitude;
     double longitude;
     Date lastModified;
+    int orientation;
 
     public PhotoExifData() {
         caption = "";
@@ -50,6 +51,9 @@ public class PhotoExifData {
 
     public void setLastModified(Date lastModified) { this.lastModified = lastModified; }
 
+    public int getOrientation() {return orientation;}
+
+    public void setOrientation(int orientation) {this.orientation = orientation;}
 
 
 }
