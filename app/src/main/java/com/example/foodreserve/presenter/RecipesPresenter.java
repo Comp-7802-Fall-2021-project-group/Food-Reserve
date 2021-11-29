@@ -1,12 +1,15 @@
 package com.example.foodreserve.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.foodreserve.model.Recipe;
 import com.example.foodreserve.model.Recipes;
+import com.example.foodreserve.view.MainActivity;
+import com.example.foodreserve.view.RecipesActivity;
 import com.example.foodreserve.view.RecipesAdapter;
 
 import org.json.JSONObject;
@@ -56,6 +59,17 @@ public class RecipesPresenter {
         }
 
         return recipes;
+    }
+
+    /**
+     * Methods go back to home activity
+     * @param context
+     * @return
+     */
+    public Intent backHomeIntent(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        //intent.putExtra("message", detectedFoodItem );
+        return intent;
     }
 
     public int getRecipesCount() {
