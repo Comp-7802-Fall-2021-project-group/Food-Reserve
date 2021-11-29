@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodreserve.presenter.RecipesPresenter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import foodreserve.R;
 
@@ -23,6 +24,8 @@ public class RecipesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
 
+
+
         // Get the intent that started this activity with the query param
         Intent intent = getIntent();
         String message = intent.getStringExtra("message");
@@ -31,6 +34,19 @@ public class RecipesActivity extends AppCompatActivity {
         if(message != null) {
             presenter.getRecipes(message, this);
         }
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
+        bottomNav.setOnItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.home:
+                    Intent homeIntent = presenter.backHomeIntent(RecipesActivity.this);
+                    startActivity(homeIntent);
+                    break;
+                case R.id.recipe:
+                    break;
+            }
+            return false;
+        });
 
         // Set up recipes recyclerview * layout orientation
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
