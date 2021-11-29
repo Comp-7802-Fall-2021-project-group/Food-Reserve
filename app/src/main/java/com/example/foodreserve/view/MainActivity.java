@@ -233,7 +233,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Go to the Recipes view
-    // TODO: rewire this ideally this should take the user to a recipe search by keyword but for demo this is what the user will press after object detection
     public void goToRecipes(View view) {
         Intent intent = presenter.searchFoodIntent(this);
         startActivity(intent);
